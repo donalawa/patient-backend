@@ -1,0 +1,13 @@
+{
+    "name": "Patient System Api",
+    "version": "0.0.0",
+    "description": "The Api Docs for Patient System",
+    "header": {
+      "title": "Header",
+      "filename": "header.md"
+    },
+    "footer": {
+      "title": "Footer",
+      "filename": "footer.md"
+    }
+  }
