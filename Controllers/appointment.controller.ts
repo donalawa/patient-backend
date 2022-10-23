@@ -18,7 +18,7 @@ let addAppointment = (req:Request,res:Response)=>{
     // WRITE APPOINTMENT CODE
     let {
         name, 
-        sex, 
+        gender, 
         phone, 
         email,  
         address, 
@@ -37,7 +37,7 @@ let addAppointment = (req:Request,res:Response)=>{
     }
     firestore.collection("appointments").add({
         name, 
-        sex, 
+        gender, 
         phone, 
         email,  
         address, 
@@ -79,7 +79,7 @@ if(!lastIndex){
             data.push({...doc.data(), id: doc.id})
         })
         res.status(responseCodes.OK_200);
-        res.json({message:messages.OKAY, docs:data});
+        res.json({docs:data});
     }).catch(err=>{
         res.status(responseCodes.INTERNAL_SERVER_ERROR_500);
             res.json({message:messages.FAILED, err});

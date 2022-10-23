@@ -14,11 +14,12 @@
  */
 import testRoutes from './test.route';
 import appointmentRoutes from "./appointment.route";
+import docsRoute from "./docs.route"
 
 
 
 export default{
     testRoutes,
     appointmentRoutes,
-    
+    docsRoute
 }

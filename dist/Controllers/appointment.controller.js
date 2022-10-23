@@ -26,13 +26,13 @@ const index_1 = __importDefault(require("../Firebase/index"));
 const firestore = index_1.default.firestore();
 let addAppointment = (req, res) => {
     // WRITE APPOINTMENT CODE
-    let { name, sex, phone, email, address, city, appointment_date, first_time, request_date, appointment_status, appointment_time, note_before_appointment, note_after_appointment } = req.body;
+    let { name, gender, phone, email, address, city, appointment_date, first_time, request_date, appointment_status, appointment_time, note_before_appointment, note_after_appointment } = req.body;
     if (!name) {
         res.status(response_1.default.BAD_REQUEST_400).json({ message: messages_1.default.REQUIRED_FEILD });
     }
     firestore.collection("appointments").add({
         name,
-        sex,
+        gender,
         phone,
         email,
         address,
@@ -68,7 +68,7 @@ let getAppointments = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 data.push(Object.assign(Object.assign({}, doc.data()), { id: doc.id }));
             });
             res.status(response_1.default.OK_200);
-            res.json({ message: messages_1.default.OKAY, docs: data });
+            res.json({ docs: data });
         }).catch(err => {
             res.status(response_1.default.INTERNAL_SERVER_ERROR_500);
             res.json({ message: messages_1.default.FAILED, err });

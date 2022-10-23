@@ -18,7 +18,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const test_route_1 = __importDefault(require("./test.route"));
 const appointment_route_1 = __importDefault(require("./appointment.route"));
+const docs_route_1 = __importDefault(require("./docs.route"));
 exports.default = {
     testRoutes: test_route_1.default,
     appointmentRoutes: appointment_route_1.default,
+    docsRoute: docs_route_1.default
 };

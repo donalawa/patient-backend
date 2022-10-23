@@ -21,8 +21,9 @@ import { Request, Response } from "express";
  */
 let validateAppointmentCreation = (req: Request, res: Response, next: any) => {
     const appointmentSchema = joi.object({
+        uniqueCode: joi.string(),
         name: joi.string().required(),
-        sex: joi.string().required(), 
+        gender: joi.string().required(), 
         phone: joi.string().required(), 
         email: joi.string().required(),  
         address: joi.string().required(), 
@@ -30,11 +31,12 @@ let validateAppointmentCreation = (req: Request, res: Response, next: any) => {
         appointment_date: joi.date(), 
         first_time: joi.string().valid('Yes', 'No').required(), 
         request_date: joi.date().required(), 
-        appointment_status: joi.string(), 
-        appointment_time: joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/), 
+        appointment_status: joi.string().valid('missed', 'rescheduled', 'success', 'pending'), 
+        appointment_time: joi.string(), 
         note_before_appointment: joi.string().required(), 
         note_after_appointment: joi.string()
     });
+
     appointmentSchema.validateAsync(req.body).then(val => {
         return next();
     }).catch(err => {
@@ -49,8 +51,9 @@ let validateAppointmentCreation = (req: Request, res: Response, next: any) => {
 
 let validateAppointmentEditing = (req: Request, res: Response, next: any) => {
     const appointmentSchema = joi.object({
+        uniqueCode: joi.string(),
         name: joi.string(),
-        sex: joi.string(), 
+        gender: joi.string(), 
         phone: joi.string(), 
         email: joi.string(),  
         address: joi.string(), 
@@ -58,8 +61,8 @@ let validateAppointmentEditing = (req: Request, res: Response, next: any) => {
         appointment_date: joi.date(), 
         first_time: joi.string().valid('Yes', 'No').required(), 
         request_date: joi.date(), 
-        appointment_status: joi.string(), 
-        appointment_time: joi.string().regex(/\b((1[0-2]|0?[1-9]):([0-5][0-9])([AaPp][Mm]))/), 
+        appointment_status: joi.string().valid('Missed', 'Rescheduled', 'Success', 'Pending'), 
+        appointment_time: joi.string(), 
         note_before_appointment: joi.string().required(), 
         note_after_appointment: joi.string()
     });
