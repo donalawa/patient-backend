@@ -48,7 +48,7 @@ const registerRoutes =  (routers: any): void  => {
     }
 };
     registerRoutes(allRouters ? allRouters : {});
-    app.listen(8080, () => {
+    app.listen(process.env.PORT || 8080, () => {
   
     console.log("BOOT :: ",'Server Started', `http://localhost:8080`)
 })
