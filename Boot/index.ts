@@ -50,6 +50,7 @@ const registerRoutes =  (routers: any): void  => {
     registerRoutes(allRouters ? allRouters : {});
     app.listen(process.env.PORT || 8080, () => {
   
+        
     console.log("BOOT :: ",'Server Started', `http://localhost:8080`)
 })
 }
