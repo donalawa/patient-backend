@@ -8,7 +8,6 @@
  **/
 
     import  admin from 'firebase-admin';
-  
 
     var serviceAccount:any = {
       "type": "service_account",
