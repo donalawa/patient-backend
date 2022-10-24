@@ -26,7 +26,7 @@ const index_1 = __importDefault(require("../Firebase/index"));
 const firestore = index_1.default.firestore();
 let addAppointment = (req, res) => {
     // WRITE APPOINTMENT CODE
-    let { name, gender, phone, email, address, city, appointment_date, first_time, request_date, appointment_status, appointment_time, note_before_appointment, note_after_appointment } = req.body;
+    let { name, gender, phone, email, address, city, age, appointment_date, first_time, request_date, appointment_status, appointment_time, uniqueCode, note_before_appointment, note_after_appointment } = req.body;
     if (!name) {
         res.status(response_1.default.BAD_REQUEST_400).json({ message: messages_1.default.REQUIRED_FEILD });
     }
@@ -37,13 +37,15 @@ let addAppointment = (req, res) => {
         email,
         address,
         city,
-        appointment_date,
+        age,
+        appointment_date: appointment_date ? appointment_date : "",
         first_time,
         request_date,
         appointment_status,
-        appointment_time,
+        appointment_time: appointment_time ? appointment_time : "",
+        uniqueCode,
         note_before_appointment,
-        note_after_appointment
+        note_after_appointment: note_after_appointment ? note_after_appointment : ""
     }).then(val => {
         res.status(response_1.default.CREATED_201);
         res.json({ message: messages_1.default.APPOINTMENT_ADDED });
@@ -54,7 +56,7 @@ let addAppointment = (req, res) => {
 };
 let getAppointments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // GET ALL APPOINTMENTS
-    let size = req.query.size ? req.query.size : 10;
+    let size = req.query.size ? req.query.size : 100;
     size = parseInt(size);
     let lastIndex = req.query.lastIndex ? req.query.lastIndex : undefined;
     const first = firestore.collection('appointments')
@@ -100,6 +102,7 @@ let getAppointment = (req, res) => {
         res.status(response_1.default.BAD_REQUEST_400).json({ message: messages_1.default.REQUIRED_FEILD });
     firestore.collection("appointments").doc(id).get().then(val => {
         res.status(response_1.default.CREATED_201);
+        // console.log("RES DATA", val);
         res.json({ message: messages_1.default.OKAY, doc: Object.assign(Object.assign({}, val.data()), { id: val.id }) });
     }).catch(err => {
         res.status(response_1.default.INTERNAL_SERVER_ERROR_500);

@@ -24,20 +24,21 @@ const response_1 = __importDefault(require("../../Messages/response"));
  */
 let validateAppointmentCreation = (req, res, next) => {
     const appointmentSchema = joi.object({
-        uniqueCode: joi.string(),
+        uniqueCode: joi.string().required(),
         name: joi.string().required(),
         gender: joi.string().required(),
         phone: joi.string().required(),
         email: joi.string().required(),
         address: joi.string().required(),
+        age: joi.string().required(),
         city: joi.string().required(),
-        appointment_date: joi.date(),
+        appointment_date: joi.date().optional().allow(''),
         first_time: joi.string().valid('Yes', 'No').required(),
         request_date: joi.date().required(),
         appointment_status: joi.string().valid('missed', 'rescheduled', 'success', 'pending'),
-        appointment_time: joi.string(),
+        appointment_time: joi.string().optional().allow(''),
         note_before_appointment: joi.string().required(),
-        note_after_appointment: joi.string()
+        note_after_appointment: joi.string().optional().allow('')
     });
     appointmentSchema.validateAsync(req.body).then(val => {
         return next();
@@ -58,14 +59,15 @@ let validateAppointmentEditing = (req, res, next) => {
         phone: joi.string(),
         email: joi.string(),
         address: joi.string(),
+        age: joi.string(),
         city: joi.string(),
-        appointment_date: joi.date(),
-        first_time: joi.string().valid('Yes', 'No').required(),
+        appointment_date: joi.date().optional().allow(''),
+        first_time: joi.string().valid('Yes', 'No'),
         request_date: joi.date(),
-        appointment_status: joi.string().valid('Missed', 'Rescheduled', 'Success', 'Pending'),
-        appointment_time: joi.string(),
-        note_before_appointment: joi.string().required(),
-        note_after_appointment: joi.string()
+        appointment_status: joi.string().valid('missed', 'rescheduled', 'success', 'pending'),
+        appointment_time: joi.string().optional().allow(''),
+        note_before_appointment: joi.string(),
+        note_after_appointment: joi.string().optional().allow('')
     });
     appointmentSchema.validateAsync(req.body).then(val => {
         return next();

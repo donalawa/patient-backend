@@ -23,11 +23,13 @@ let addAppointment = (req:Request,res:Response)=>{
         email,  
         address, 
         city, 
+        age,
         appointment_date, 
         first_time, 
         request_date, 
         appointment_status, 
         appointment_time, 
+        uniqueCode,
         note_before_appointment, 
         note_after_appointment
     } = req.body;
@@ -42,13 +44,15 @@ let addAppointment = (req:Request,res:Response)=>{
         email,  
         address, 
         city, 
-        appointment_date, 
+        age,
+        appointment_date: appointment_date ? appointment_date  : "", 
         first_time, 
         request_date, 
         appointment_status, 
-        appointment_time, 
+        appointment_time: appointment_time ? appointment_time : "",
+        uniqueCode, 
         note_before_appointment, 
-        note_after_appointment
+        note_after_appointment: note_after_appointment ? note_after_appointment : ""
     }).then(val=>{
         res.status(responseCodes.CREATED_201);
         res.json({message:messages.APPOINTMENT_ADDED});
@@ -61,7 +65,7 @@ let addAppointment = (req:Request,res:Response)=>{
 
 let getAppointments = async (req:Request,res:Response)=>{
     // GET ALL APPOINTMENTS
-   let size:any = req.query.size ? req.query.size: 10;
+   let size:any = req.query.size ? req.query.size: 100;
    size = parseInt(size) 
     let lastIndex:any = req.query.lastIndex? req.query.lastIndex: undefined;
    const first = firestore.collection('appointments')
@@ -114,6 +118,7 @@ let getAppointment = (req:Request,res:Response)=>{
     if(!id)  res.status(responseCodes.BAD_REQUEST_400).json({message:messages.REQUIRED_FEILD})
     firestore.collection("appointments").doc(id).get().then(val=>{
         res.status(responseCodes.CREATED_201);
+        // console.log("RES DATA", val);
         res.json({message:messages.OKAY, doc:{...val.data(), id: val.id}});
     }).catch(err=>{
         res.status(responseCodes.INTERNAL_SERVER_ERROR_500);
@@ -135,6 +140,7 @@ let deleteAppointment = (req:Request,res:Response)=>{
 
 let updateAppointment = (req:Request,res:Response)=>{
     let id = req.params.id;
+    
     firestore.collection("appointments").doc(id).update(req.body).then(val=>{
         res.status(responseCodes.CREATED_201);
         res.json({message:messages.UPDATED});
